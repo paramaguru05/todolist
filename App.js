@@ -5,11 +5,23 @@ import Footer from './Footer'
 const App = () => {
 const [listItems,setListItems]=useState([])
 const [item,setItem]=useState("")
-let lists=JSON.parse(localStorage.getItem("items"))
 useEffect(()=>{
-   setListItems(lists)
+   setListItems(JSON.parse(localStorage.getItem("items")))
+
 },[])
-console.log(lists)
+const featchData=async()=>{
+  try{
+    let respons=await fetch('http://localhost:3500/listItems')
+    if(!respons.ok) throw Error("Data not resived")
+    let data=await respons.json()
+  console.log(data[0].item)
+
+  }catch(err){
+    console.log(err.message)
+  }
+}
+
+featchData()
 function addItem(){
   if(item!==""){
     let ids=listItems.length
@@ -36,7 +48,7 @@ function handleDelete(id){
             addItem={addItem}
             />
             <Content
-            listItems={listItems}
+            listItems={listItems.reverse()}
             handleDelete={handleDelete}/>                   
             <Footer
             length={listItems.length}/>

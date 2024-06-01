@@ -1,5 +1,4 @@
 import React from 'react'
-
 const Content = ({handleDelete,listItems}) => {
   return (
     <main className=' mt-6'>
